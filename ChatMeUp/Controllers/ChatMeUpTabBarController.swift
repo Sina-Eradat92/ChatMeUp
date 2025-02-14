@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  ChatMeUpTabBarController.swift
 //  ChatMeUp
 //
 //  Created by Sina Eradat on 2/13/25.
@@ -7,13 +7,12 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ChatMeUpTabBarController: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+    
     }
-
+    
 
 }
-
