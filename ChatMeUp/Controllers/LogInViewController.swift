@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 class LogInViewController: UIViewController {
     
@@ -116,6 +117,14 @@ class LogInViewController: UIViewController {
         }
         
         // Firebase login
+        Task {
+            do {
+                try await FirebaseAuth.Auth.auth().signIn(withEmail: email, password: password)
+            } catch {
+                print("Faild to login user: \(error)")
+            }
+        }
+        
     }
     
     private func allertUserLoginError() {

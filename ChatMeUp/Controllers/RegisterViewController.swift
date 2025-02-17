@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import PhotosUI
+import FirebaseAuth
 
 class RegisterViewController: UIViewController {
     
@@ -155,6 +155,15 @@ class RegisterViewController: UIViewController {
         }
         
         // Firebase Register
+        Task {
+            do {
+                try await FirebaseAuth.Auth.auth().createUser(withEmail: email, password: password)
+                
+            } catch {
+                print("Registration Error: \(error)")
+            }
+        }
+        
     }
     
     private func allertUserLoginError() {
@@ -210,7 +219,7 @@ extension RegisterViewController: UIImagePickerControllerDelegate, UINavigationC
         let vc = UIImagePickerController()
         vc.sourceType = .photoLibrary
         vc.delegate = self
-        vc.allowsEditing = true
+        vc.allowsEditing = true 
         present(vc, animated: true)
     }
     
