@@ -7,6 +7,7 @@
 
 import UIKit
 import FirebaseAuth
+import GoogleSignIn
 
 class LogInViewController: UIViewController {
     
@@ -66,6 +67,9 @@ class LogInViewController: UIViewController {
         button.addTarget(nil, action: #selector(didTapLogin), for: .touchUpInside)
         return button
     }()
+    
+    private let googleSignInButton = GIDSignInButton()
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -79,8 +83,11 @@ class LogInViewController: UIViewController {
         //
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapScreen)))
         
+        //
+        googleSignInButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapGoogleSignIn)))
+        
         // Add Subviews
-        scrollView.addSubViews(imageView, emailField, passwordField, loginButton)
+        scrollView.addSubViews(imageView, emailField, passwordField, loginButton, googleSignInButton)
         view.addSubViews(scrollView)
         
         // Delegate
@@ -97,6 +104,7 @@ class LogInViewController: UIViewController {
         emailField.frame = CGRect(x: 30, y: imageView.bottom + 20, width: scrollView.width - 60, height: 52)
         passwordField.frame = CGRect(x: 30, y: emailField.bottom + 10, width: scrollView.width - 60, height: 52)
         loginButton.frame = CGRect(x: 30, y: passwordField.bottom + 10, width: scrollView.width - 60, height: 52)
+        googleSignInButton.frame = CGRect(x: 30, y: loginButton.bottom + 10, width: scrollView.width - 60, height: 52)
     }
     
     @objc private func didTapScreen() {
@@ -119,12 +127,38 @@ class LogInViewController: UIViewController {
         // Firebase login
         Task {
             do {
-                try await FirebaseAuth.Auth.auth().signIn(withEmail: email, password: password)
+                try await FirebaseAuth.Auth.auth().signIn(withEmail: email.lowercased(), password: password)
+                navigationController?.dismiss(animated: true)
             } catch {
                 print("Faild to login user: \(error)")
             }
         }
         
+    }
+    
+    @objc func didTapGoogleSignIn() {
+        GIDSignIn.sharedInstance.signIn(withPresenting: self) { [unowned self]  result, error in
+            guard error == nil else { print("Google SignIn Error: \(error!)"); return }
+            guard let user = result?.user, let idToken = user.idToken?.tokenString else { print("Error No User Found"); return }
+            let credential = GoogleAuthProvider.credential(withIDToken: idToken, accessToken: user.accessToken.tokenString)
+            
+            guard let email = result?.user.profile?.email,
+            let firstName = result?.user.profile?.givenName,
+            let lastName = result?.user.profile?.familyName else { return }
+            
+            // Firebase login
+            Task {
+                do {
+                    if await !DataBaseManager.shared.userExists(with: email) {
+                        try DataBaseManager.shared.insertUser(with: ChatAppUser(first_name: firstName, last_name: lastName, email_address: email))
+                    }
+                    try await FirebaseAuth.Auth.auth().signIn(with: credential)
+                    navigationController?.dismiss(animated: true)
+                } catch {
+                    print("Faild to login user: \(error)")
+                }
+            }
+        }
     }
     
     private func allertUserLoginError() {

@@ -150,24 +150,30 @@ class RegisterViewController: UIViewController {
               let firstName = firstNameFiled.text, let lastName = lastNameFiled.text,
               !firstName.isEmpty, !lastName.isEmpty,
               !email.isEmpty, !password.isEmpty, password.count >= 6 else {
-            allertUserLoginError()
+            allertUserLoginError(with: "Bad Credentials", message: "Please enter all information to register")
             return
         }
         
         // Firebase Register
         Task {
             do {
+                let user = ChatAppUser(first_name: firstName, last_name: lastName, email_address: email.lowercased())
+                if await DataBaseManager.shared.userExists(for: user) {
+                    allertUserLoginError(with: "Bad Credentials", message: " User already Exists with this email!")
+                    return
+                }
+                try DataBaseManager.shared.insertUser(with: user)
                 try await FirebaseAuth.Auth.auth().createUser(withEmail: email, password: password)
-                
+                navigationController?.dismiss(animated: true)
             } catch {
                 print("Registration Error: \(error)")
             }
         }
-        
     }
     
-    private func allertUserLoginError() {
-        let alert = UIAlertController(title:  "Bad Credentials", message: "Please enter all information to register", preferredStyle: .alert)
+    // TODO: Move to error/ alert manager
+    private func allertUserLoginError(with title: String, message: String) {
+        let alert = UIAlertController(title:  title, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Dismiss", style: .cancel ))
         present(alert, animated: true)
     }

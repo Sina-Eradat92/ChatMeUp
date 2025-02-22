@@ -10,6 +10,8 @@
 		3F2113722D62FB6400B0DB4D /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 3F2113712D62FB6400B0DB4D /* FirebaseAuth */; };
 		3F2113742D62FB6400B0DB4D /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 3F2113732D62FB6400B0DB4D /* FirebaseCore */; };
 		3F2113762D62FB6400B0DB4D /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 3F2113752D62FB6400B0DB4D /* FirebaseDatabase */; };
+		3F46D2612D65693000238805 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 3F46D2602D65693000238805 /* GoogleSignIn */; };
+		3F46D2632D65693000238805 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 3F46D2622D65693000238805 /* GoogleSignInSwift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,7 +44,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3F46D2632D65693000238805 /* GoogleSignInSwift in Frameworks */,
 				3F2113762D62FB6400B0DB4D /* FirebaseDatabase in Frameworks */,
+				3F46D2612D65693000238805 /* GoogleSignIn in Frameworks */,
 				3F2113742D62FB6400B0DB4D /* FirebaseCore in Frameworks */,
 				3F2113722D62FB6400B0DB4D /* FirebaseAuth in Frameworks */,
 			);
@@ -90,6 +94,8 @@
 				3F2113712D62FB6400B0DB4D /* FirebaseAuth */,
 				3F2113732D62FB6400B0DB4D /* FirebaseCore */,
 				3F2113752D62FB6400B0DB4D /* FirebaseDatabase */,
+				3F46D2602D65693000238805 /* GoogleSignIn */,
+				3F46D2622D65693000238805 /* GoogleSignInSwift */,
 			);
 			productName = ChatMeUp;
 			productReference = 3F2112CE2D5F151300B0DB4D /* ChatMeUp.app */;
@@ -121,6 +127,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				3F2113702D62FB6400B0DB4D /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				3F46D25F2D65693000238805 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 3F2112CF2D5F151300B0DB4D /* Products */;
@@ -163,8 +170,8 @@
 				DEVELOPMENT_TEAM = JB9S2XD9E3;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ChatMeUp/Info.plist;
-				INFOPLIST_KEY_NSCameraUsageDescription = "$(PRODUCT_NAME) would like to access your camera";
-				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "$(PRODUCT_NAME) would like to access your photos";
+				INFOPLIST_KEY_NSCameraUsageDescription = "ChatMeUp would like to access your camera";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "ChatMeUp would like to access your photos";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
@@ -194,8 +201,8 @@
 				DEVELOPMENT_TEAM = JB9S2XD9E3;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ChatMeUp/Info.plist;
-				INFOPLIST_KEY_NSCameraUsageDescription = "$(PRODUCT_NAME) would like to access your camera";
-				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "$(PRODUCT_NAME) would like to access your photos";
+				INFOPLIST_KEY_NSCameraUsageDescription = "ChatMeUp would like to access your camera";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "ChatMeUp would like to access your photos";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
@@ -366,6 +373,14 @@
 				minimumVersion = 11.8.1;
 			};
 		};
+		3F46D25F2D65693000238805 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/google/GoogleSignIn-iOS";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -383,6 +398,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 3F2113702D62FB6400B0DB4D /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseDatabase;
+		};
+		3F46D2602D65693000238805 /* GoogleSignIn */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3F46D25F2D65693000238805 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignIn;
+		};
+		3F46D2622D65693000238805 /* GoogleSignInSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3F46D25F2D65693000238805 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignInSwift;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
